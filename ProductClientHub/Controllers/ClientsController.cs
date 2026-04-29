@@ -2,11 +2,9 @@
 using ProductClientHub.API.UseCases.Clients.Register;
 using ProductClientHub.Communication.Requests;
 using ProductClientHub.Communication.Responses;
-using ProductClientHub.Exceptions.ExceptionsBase;
 
-namespace ProductClientHub.Controllers
+namespace ProductClientHub.API.Controllers;
 
-{
     [Route("api/[controller]")]
     [ApiController]
     public class ClientsController : ControllerBase
@@ -16,23 +14,11 @@ namespace ProductClientHub.Controllers
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
         public IActionResult Register([FromBody] RequestClientJson request)
         {
-            try
-            {
                 var useCase = new RegisterClientUseCase();
 
                 var response = useCase.Execute(request);
 
                 return Created(string.Empty, response);
-            }
-            catch (ProductClientHubExceptions ex)
-            {
-                var errors =    ex.GetErrors();
-                return BadRequest(new ResponseErrorMessagesJson(errors));
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseErrorMessagesJson("Erro desconhecido."));
-            }
         }
 
         [HttpPut]
@@ -60,4 +46,4 @@ namespace ProductClientHub.Controllers
             return Ok();
         }
     }
-}
+

@@ -2,6 +2,7 @@
 using ProductClientHub.API.UseCases.Clients.Register;
 using ProductClientHub.Communication.Requests;
 using ProductClientHub.Communication.Responses;
+using ProductClientHub.Exceptions.ExceptionsBase;
 
 namespace ProductClientHub.Controllers
 
@@ -15,7 +16,6 @@ namespace ProductClientHub.Controllers
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
         public IActionResult Register([FromBody] RequestClientJson request)
         {
-
             try
             {
                 var useCase = new RegisterClientUseCase();
@@ -24,9 +24,10 @@ namespace ProductClientHub.Controllers
 
                 return Created(string.Empty, response);
             }
-            catch (ArgumentException ex)
+            catch (ProductClientHubExceptions ex)
             {
-                return BadRequest(new ResponseErrorMessagesJson(ex.Message));
+                var errors =    ex.GetErrors();
+                return BadRequest(new ResponseErrorMessagesJson(errors));
             }
             catch
             {

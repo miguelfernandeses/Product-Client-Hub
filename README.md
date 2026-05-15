@@ -1,4 +1,4 @@
-# 📦 Product Client Hub (.NET)
+# 📦 Product Client Hub
 
 API REST desenvolvida em .NET para o controle e gerenciamento de clientes e seus respectivos produtos. O projeto foca em uma arquitetura organizada, separando responsabilidades em bibliotecas de classes para comunicações e tratamento de exceções.
 
